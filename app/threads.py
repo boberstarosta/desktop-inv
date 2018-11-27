@@ -13,7 +13,7 @@ class ClockThread(threading.Thread):
         "sobota",
         "niedziela"]
 
-    def __init__(self, callback, interval=1/10):
+    def __init__(self, callback, interval=1.0):
         super().__init__(daemon=True)
         self._callback = callback
         self._interval = interval

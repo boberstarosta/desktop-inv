@@ -22,3 +22,20 @@ def set_window_icon(window, icon_file_name):
             print("Error loading icon file {}".format(icon_file))
     else:
         print("Icon file {} doesn't exist.".format(icon_file))
+
+
+def create_scrollable_listbox(master, **listbox_kwargs):
+    frame = tk.Frame(master)
+    frame.grid_columnconfigure(0, weight=1)
+    frame.grid_rowconfigure(0, weight=1)
+
+    vscrollbar = tk.Scrollbar(frame, orient=tk.VERTICAL)
+    vscrollbar.grid(column=1, row=0, sticky=tk.NS)
+
+    listbox = tk.Listbox(frame, **listbox_kwargs)
+    listbox.grid(column=0, row=0, sticky=tk.NSEW)
+
+    vscrollbar.config(command=listbox.yview)
+    listbox.config(yscrollcommand=vscrollbar.set)
+
+    return listbox, frame

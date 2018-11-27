@@ -1,12 +1,16 @@
 import tkinter as tk
 from app.threads import ClockThread
+from . import utils
 
 
 class Page(tk.Frame):
     def __init__(self, master, **kwargs):
         super().__init__(master, **kwargs)
 
-    def on_shown(self):
+    def on_hidden(self):
+        pass
+
+    def on_shown(self, *args, **kwargs):
         pass
 
 
@@ -15,6 +19,7 @@ class PageContainerFrame(tk.Frame):
         super().__init__(master, *args, **kwargs)
 
         self.pages = {}
+        self.current_page = None
 
         self.grid(column=0, row=0, sticky=tk.NSEW)
         self.grid_columnconfigure(0, weight=1)
@@ -29,10 +34,13 @@ class PageContainerFrame(tk.Frame):
         if len(page_classes):
             self.show_page(page_classes[0].__name__)
 
-    def show_page(self, page_name):
+    def show_page(self, page_name, *args, **kwargs):
         page = self.pages[page_name]
+        if self.current_page is not None:
+            self.current_page.on_hidden()
         page.tkraise()
-        page.on_shown()
+        page.on_shown(*args, **kwargs)
+        self.current_page = page
         return page
 
 
@@ -56,4 +64,29 @@ class MainMenuPage(Page):
         self.var_time.set(time)
 
     def new_invoice(self):
-        pass
+        self.master.show_page("SelectCustomerPage")
+
+
+class SelectCustomerPage(Page):
+    def __init__(self, master, **kwargs):
+        super().__init__(master, **kwargs)
+
+        title_label = tk.Label(self, text="Wybierz nabywcę",
+                               font=("TkDefaultFont", 16, "bold"), fg="#777")
+        title_label.pack(side=tk.TOP, fill=tk.X)
+
+        top_frame = tk.Frame(self)
+        top_frame.pack(side=tk.TOP, fill=tk.X)
+
+        self.var_search = tk.StringVar()
+        search_entry = tk.Entry(top_frame, textvariable=self.var_search)
+        search_entry.pack(side=tk.LEFT, fill=tk.X, expand=True)
+
+        new_customer_btn = tk.Button(top_frame, text="Dodaj nowego",
+                                     state=tk.DISABLED)
+        new_customer_btn.pack()
+
+        self.listbox, listbox_frame = utils.create_scrollable_listbox(self)
+        listbox_frame.pack(fill=tk.BOTH, expand=True)
+
+        search_entry.focus_set()
