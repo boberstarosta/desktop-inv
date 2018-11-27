@@ -62,6 +62,17 @@ class CurrencyCase(unittest.TestCase):
         self.assertEqual(Currency(123) - Currency(123), 0)
         self.assertEqual(Currency(123) * Currency(200), 24600)
         self.assertEqual(Currency(123) // Currency(123), 1)
+        self.assertEqual(Currency(-123), -Currency(123))
+
+    def test_comparison(self):
+        self.assertTrue(Currency(123) == 123)
+        self.assertTrue(Currency(123) < 124)
+        self.assertTrue(Currency(-123) < Currency(123))
+        self.assertTrue(Currency(-124) < Currency(-123))
+        self.assertTrue(Currency(123) > 100)
+        self.assertTrue(Currency(-123) > -124)
+        self.assertTrue(Currency(123) > Currency(-123))
+        self.assertTrue(Currency(0) == Currency(0))
 
 
 if __name__ == '__main__':
