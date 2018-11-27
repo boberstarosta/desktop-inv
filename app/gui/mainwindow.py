@@ -1,6 +1,7 @@
 import tkinter as tk
 
 from . import utils
+from .pages import PageContainerFrame, MainMenuPage
 
 
 class MainWindow(tk.Tk):
@@ -9,5 +10,9 @@ class MainWindow(tk.Tk):
 
         self.title("desktop-inv v-0.1")
         utils.set_window_icon(self, "icon.png")
-        self.minsize(600, 600)
+        self.minsize(1200, 800)
         utils.center_window(self)
+
+        pages = [MainMenuPage]
+        page_container = PageContainerFrame(self, pages)
+        page_container.pack(fill=tk.BOTH, expand=True)

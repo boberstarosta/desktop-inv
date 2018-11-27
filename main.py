@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-from app.gui import MainWindow
+from app.gui.mainwindow import MainWindow
 
 
 if __name__ == "__main__":
