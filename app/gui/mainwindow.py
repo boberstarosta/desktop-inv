@@ -1,6 +1,6 @@
 import tkinter as tk
 
-from app import guiutils
+from . import utils
 
 
 class MainWindow(tk.Tk):
@@ -8,6 +8,6 @@ class MainWindow(tk.Tk):
         super().__init__()
 
         self.title("desktop-inv v-0.1")
-        guiutils.set_window_icon(self, "icon.png")
+        utils.set_window_icon(self, "icon.png")
         self.minsize(600, 600)
-        guiutils.center_window(self)
+        utils.center_window(self)

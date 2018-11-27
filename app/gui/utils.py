@@ -1,3 +1,4 @@
+import tkinter as tk
 import pathlib
 
 
@@ -21,4 +22,3 @@ def set_window_icon(window, icon_file_name):
             print("Error loading icon file {}".format(icon_file))
     else:
         print("Icon file {} doesn't exist.".format(icon_file))
-
