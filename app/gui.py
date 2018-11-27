@@ -11,4 +11,3 @@ class MainWindow(tk.Tk):
         guiutils.set_window_icon(self, "icon.png")
         self.minsize(600, 600)
         guiutils.center_window(self)
-
