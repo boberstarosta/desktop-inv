@@ -1,5 +1,6 @@
 import tkinter as tk
 import platform
+from app.gui import look
 
 
 OS = platform.system()
@@ -8,10 +9,10 @@ OS = platform.system()
 class VerticalScrollFrame(tk.Frame):
     active_widget = None
 
-    def __init__(self, parent):
-        super().__init__(parent)
+    def __init__(self, parent, **kwargs):
+        super().__init__(parent, **kwargs)
 
-        vscrollbar = tk.Scrollbar(self, orient="vertical")
+        vscrollbar = tk.Scrollbar(self, orient="vertical", **look.scrollbar)
         vscrollbar.pack(fill="y", side="right", expand=False)
 
         self.canvas = tk.Canvas(self, bd=0, highlightthickness=0,
@@ -23,7 +24,7 @@ class VerticalScrollFrame(tk.Frame):
         self.canvas.xview_moveto(0)
         self.canvas.yview_moveto(0)
 
-        self.interior = interior = tk.Frame(self.canvas)
+        self.interior = interior = tk.Frame(self.canvas, **look.frame)
         interior_id = self.canvas.create_window(0, 0, window=interior,
                                                 anchor="nw")
 
@@ -46,7 +47,7 @@ class VerticalScrollFrame(tk.Frame):
 
         on_mousewheel = self._get_mousewheel_handler()
 
-        if OS == "Linux" :
+        if OS == "Linux":
             self.bind_all('<4>', on_mousewheel)
             self.bind_all('<5>', on_mousewheel)
         else:

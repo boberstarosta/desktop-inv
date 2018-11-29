@@ -9,17 +9,22 @@ class ItemRow:
         self.index = index
         if item is None:
             item = Item()
-        self.item = item()
+        self.item = item
 
         self.var_name = tk.StringVar()
         name_entry = tk.Entry(master, textvariable=self.var_name,
                               **look.entry)
         name_entry.grid(column=0, row=index + 1, sticky=tk.EW, **look.grid)
 
+        self.var_unit = tk.StringVar()
+        unit_entry = tk.Entry(master, textvariable=self.var_unit,
+                              **look.entry)
+        unit_entry.grid(column=1, row=index + 1, sticky=tk.EW, **look.grid)
+
 
 class ItemList(tk.Frame):
-    def __init__(self, master, items=[], **args):
-        super().__init__(master, **args)
+    def __init__(self, master, items=[], **kwargs):
+        super().__init__(master, **kwargs)
 
         self.itemrows = []
 
@@ -34,10 +39,13 @@ class ItemList(tk.Frame):
 
         self.update_itemrows(items)
 
-        add_button = tk.Button(self, text="Dodaj", command=self.add,
-                               **look.button)
-        add_button.grid(column=0, row=len(self.itemrows) + 2, sticky=tk.EW,
-                        **look.grid)
+        self.add_button = tk.Button(self, text="Dodaj", command=self.add,
+                                    **look.button)
+        self.add_button.grid(column=0, row=len(self.itemrows) + 2,
+                             sticky=tk.EW, **look.grid)
+
+        if not self.itemrows:
+            self.add()
 
     def update_itemrows(self, items):
         self.itemrows = [ItemRow(self, i, item)
@@ -46,4 +54,6 @@ class ItemList(tk.Frame):
             pass
 
     def add(self):
-        pass
+        itemrow = ItemRow(self, len(self.itemrows))
+        self.itemrows.append(itemrow)
+        self.add_button.grid(row=len(self.itemrows) + 2)

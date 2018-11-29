@@ -5,6 +5,7 @@ from app.models import Invoice
 from app.gui import look
 from app.gui.itemlist import ItemList
 from app.gui.pages import Page
+from app.gui.scroll import VerticalScrollFrame
 
 
 class NewInvoicePage(Page):
@@ -75,9 +76,13 @@ class NewInvoicePage(Page):
                                               **look.checkbutton)
         self.markup_checkbox.pack(fill=tk.X, **look.pack)
 
-        self.item_list = ItemList(self, **look.frame_inv)
-        self.item_list.pack(side=tk.TOP, fill=tk.BOTH, expand=True,
-                       **look.pack)
+        scroll_frame = VerticalScrollFrame(self, **look.frame)
+        scroll_frame.pack(side=tk.TOP, fill=tk.BOTH, expand=True,
+                          **look.pack)
+
+        self.item_list = ItemList(scroll_frame.interior, height=900, **look.frame_inv)
+        self.item_list.pack(side=tk.TOP, 
+                            **look.pack)
 
     def on_shown(self, buyer=None):
         if self.invoice is None:
