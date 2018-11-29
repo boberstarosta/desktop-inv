@@ -64,6 +64,16 @@ class NewInvoicePage(Page):
                                  **look.button)
         buyer_button.pack(side=tk.LEFT, fill=tk.X, **look.pack)
 
+        markup_frame = tk.Frame(self, **look.frame)
+        markup_frame.pack(side=tk.TOP, fill=tk.X)
+
+        self.var_markup = tk.IntVar()
+        self.markup_checkbox = tk.Checkbutton(markup_frame,
+                                              text="Procedura marży",
+                                              variable=self.var_markup,
+                                              **look.checkbutton)
+        self.markup_checkbox.pack(fill=tk.X, **look.pack)
+
     def on_shown(self, buyer=None):
         if self.invoice is None:
             self.invoice = Invoice(

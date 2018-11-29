@@ -93,3 +93,13 @@ scrollbar = {
     'elementborderwidth': 0,
 }
 
+checkbutton = {
+    'font': FONT,
+    'background': WHITE,
+    'foreground': BLUE,
+    'activebackground': BLUE,
+    'activeforeground': WHITE,
+    'padx': PADDING,
+    'pady': PADDING,
+}
+
