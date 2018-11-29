@@ -1,10 +1,10 @@
 import tkinter as tk
 
-from . import utils
-from .pages import PageContainerFrame
-from .pages.mainmenu import MainMenuPage
-from .pages.selectbuyer import SelectBuyerPage
-from .pages.newinvoice import NewInvoicePage
+from app.gui import look, utils
+from app.gui.pages import PageContainerFrame
+from app.gui.pages.mainmenu import MainMenuPage
+from app.gui.pages.selectbuyer import SelectBuyerPage
+from app.gui.pages.newinvoice import NewInvoicePage
 
 
 class MainWindow(tk.Tk):
@@ -17,6 +17,6 @@ class MainWindow(tk.Tk):
         utils.center_window(self)
 
         pages = [MainMenuPage, SelectBuyerPage, NewInvoicePage]
-        page_container = PageContainerFrame(self, pages)
+        page_container = PageContainerFrame(self, pages, **look.frame)
         page_container.pack(fill=tk.BOTH, expand=True)
 

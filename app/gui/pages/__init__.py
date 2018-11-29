@@ -1,4 +1,5 @@
 import tkinter as tk
+from app.gui import look
 
 
 class Page(tk.Frame):
@@ -13,8 +14,8 @@ class Page(tk.Frame):
 
 
 class PageContainerFrame(tk.Frame):
-    def __init__(self, master, page_classes, *args, **kwargs):
-        super().__init__(master, *args, **kwargs)
+    def __init__(self, master, page_classes, **kwargs):
+        super().__init__(master, **kwargs)
 
         self.pages = {}
         self.current_page = None
@@ -25,7 +26,7 @@ class PageContainerFrame(tk.Frame):
 
         for page_class in page_classes:
             page_name = page_class.__name__
-            page = page_class(self)
+            page = page_class(self, **look.frame)
             self.pages[page_name] = page
             page.grid(row=0, column=0, sticky=tk.NSEW)
 
