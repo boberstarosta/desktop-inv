@@ -4,18 +4,22 @@ from sqlalchemy.orm import relationship
 from app import db
 
 
-class Customer(db.Base):
-    __tablename__ = "customers"
+class Buyer(db.Base):
+    __tablename__ = "buyers"
 
-    id = Column(Integer, Sequence("customer_id_seq"), primary_key=True)
+    id = Column(Integer, Sequence("buyer_id_seq"), primary_key=True)
     name = Column(String(150))
     address = Column(String(300))
     vat_number = Column(String(20))
 
-    invoices = relationship("Invoice", back_populates="customer")
+    invoices = relationship("Invoice", back_populates="buyer")
 
     def __repr__(self):
-        return "<Customer({})>".format(self.name)
+        return "<Buyer({})>".format(self.name)
+
+    def to_str_row(self):
+        lines = [self.name] + self.address.splitlines() + [self.vat_number]
+        return "  ".join(lines)
 
 
 class Rate(db.Base):
@@ -54,9 +58,9 @@ class Invoice(db.Base):
 
     id = Column(Integer, Sequence("invoice_id_seq"), primary_key=True)
     date = Column(Date, default=datetime.date.today)
-    customer_id = Column(Integer, ForeignKey("customers.id"))
+    buyer_id = Column(Integer, ForeignKey("buyers.id"))
 
-    customer = relationship("Customer", back_populates="invoices")
+    buyer = relationship("Buyer", back_populates="invoices")
     items = relationship("Item", back_populates="invoice")
 
     def __repr__(self):

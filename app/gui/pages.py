@@ -1,6 +1,7 @@
 import tkinter as tk
+from app import controller
+from app.gui import utils
 from app.threads import ClockThread
-from . import utils
 
 
 class Page(tk.Frame):
@@ -64,12 +65,15 @@ class MainMenuPage(Page):
         self.var_time.set(time)
 
     def new_invoice(self):
-        self.master.show_page("SelectCustomerPage")
+        self.master.show_page("SelectBuyerPage", "NewInvoicePage")
 
 
-class SelectCustomerPage(Page):
+class SelectBuyerPage(Page):
     def __init__(self, master, **kwargs):
         super().__init__(master, **kwargs)
+
+        self.buyers = {}
+        self.next_page = None
 
         title_label = tk.Label(self, text="Wybierz nabywcę",
                                font=("TkDefaultFont", 16, "bold"), fg="#777")
@@ -89,4 +93,33 @@ class SelectCustomerPage(Page):
         self.listbox, listbox_frame = utils.create_scrollable_listbox(self)
         listbox_frame.pack(fill=tk.BOTH, expand=True)
 
+        self.var_search.trace("w", lambda *_: self.on_search_changed())
+        self.listbox.bind("<Double-1>", lambda _: self.on_buyer_selected())
+
         search_entry.focus_set()
+
+    def on_shown(self, next_page):
+        self.next_page = next_page
+        self.update_buyer_list()
+
+    def on_search_changed(self):
+        self.update_buyer_list()
+
+    def on_buyer_selected(self):
+        if self.next_page is None:
+            return
+
+        selection = self.listbox.curselection()
+        text = self.listbox.get(selection[0])
+        buyer = self.buyers[text]
+
+    def update_buyer_list(self):
+        buyers = controller.search_buyers(self.var_search.get())
+        self.buyers.clear()
+        self.listbox.delete(0, tk.END)
+        for buyer in buyers:
+            text = buyer.to_str_row()
+            if text not in self.buyers:
+                self.buyers[text] = buyer
+            self.listbox.insert(tk.END, text)
+

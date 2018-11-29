@@ -1,7 +1,7 @@
 import tkinter as tk
 
 from . import utils
-from .pages import PageContainerFrame, MainMenuPage, SelectCustomerPage
+from .pages import PageContainerFrame, MainMenuPage, SelectBuyerPage
 
 
 class MainWindow(tk.Tk):
@@ -13,6 +13,6 @@ class MainWindow(tk.Tk):
         self.minsize(1200, 800)
         utils.center_window(self)
 
-        pages = [MainMenuPage, SelectCustomerPage]
+        pages = [MainMenuPage, SelectBuyerPage]
         page_container = PageContainerFrame(self, pages)
         page_container.pack(fill=tk.BOTH, expand=True)
