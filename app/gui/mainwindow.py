@@ -19,4 +19,6 @@ class MainWindow(tk.Tk):
         pages = [MainMenuPage, SelectBuyerPage, NewInvoicePage]
         page_container = PageContainerFrame(self, pages, **look.frame)
         page_container.pack(fill=tk.BOTH, expand=True)
+        
+        self.bind("<Escape>", lambda _: page_container.show_page("MainMenuPage"))
 

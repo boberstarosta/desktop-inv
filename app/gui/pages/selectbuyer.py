@@ -55,7 +55,7 @@ class SelectBuyerPage(Page):
         selection = self.listbox.curselection()
         text = self.listbox.get(selection[0])
         buyer = self.buyers[text]
-        self.master.show_page(self.next_page, buyer)
+        self.master.show_page(self.next_page, buyer=buyer)
 
     def update_buyer_list(self):
         buyers = controller.search_buyers(self.var_search.get())

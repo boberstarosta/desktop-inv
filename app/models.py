@@ -21,6 +21,11 @@ class Buyer(db.Base):
         lines = [self.name] + self.address.splitlines() + [self.vat_number]
         return "  ".join(lines)
 
+    def to_text(self):
+        lines = [self.name] + self.address.splitlines()
+        lines.append("NIP: {}".format(self.vat_number))
+        return "\n".join(lines)
+
 
 class Rate(db.Base):
     __tablename__ = "rates"
@@ -58,17 +63,18 @@ class Invoice(db.Base):
 
     id = Column(Integer, Sequence("invoice_id_seq"), primary_key=True)
     date = Column(Date, default=datetime.date.today)
+    number = Column(Integer)
     buyer_id = Column(Integer, ForeignKey("buyers.id"))
 
     buyer = relationship("Buyer", back_populates="invoices")
     items = relationship("Item", back_populates="invoice")
 
     def __repr__(self):
-        return "<Invoice({})>".format(self.number)
+        return "<Invoice({}/{})>".format(self.number, self.date)
 
-    @property
-    def number(self):
-        return str(self.date)
+    def get_number_str(self):
+        return "{}/{}/{}".format(self.number, self.date.month, self.date.year)
 
 
 db.Base.metadata.create_all(db.engine)
+
