@@ -1,9 +1,10 @@
 import tkinter as tk
 import datetime
-from app.gui import look
-from app.gui.pages import Page
-from app.models import Invoice
 from app import controller
+from app.models import Invoice
+from app.gui import look
+from app.gui.itemlist import ItemList
+from app.gui.pages import Page
 
 
 class NewInvoicePage(Page):
@@ -73,6 +74,10 @@ class NewInvoicePage(Page):
                                               variable=self.var_markup,
                                               **look.checkbutton)
         self.markup_checkbox.pack(fill=tk.X, **look.pack)
+
+        self.item_list = ItemList(self, **look.frame_inv)
+        self.item_list.pack(side=tk.TOP, fill=tk.BOTH, expand=True,
+                       **look.pack)
 
     def on_shown(self, buyer=None):
         if self.invoice is None:
