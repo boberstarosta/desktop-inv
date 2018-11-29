@@ -26,7 +26,7 @@ def set_window_icon(window, icon_file_name):
 
 
 def create_scrollable_listbox(master, **listbox_kwargs):
-    frame = tk.Frame(master)
+    frame = tk.Frame(master, **look.frame)
     frame.grid_columnconfigure(0, weight=1)
     frame.grid_rowconfigure(0, weight=1)
 
@@ -34,7 +34,7 @@ def create_scrollable_listbox(master, **listbox_kwargs):
     vscrollbar.grid(column=1, row=0, sticky=tk.NS)
 
     listbox = tk.Listbox(frame, **listbox_kwargs)
-    listbox.grid(column=0, row=0, sticky=tk.NSEW)
+    listbox.grid(column=0, row=0, sticky=tk.NSEW, **look.grid)
 
     vscrollbar.config(command=listbox.yview)
     listbox.config(yscrollcommand=vscrollbar.set)

@@ -23,7 +23,7 @@ class MainMenuPage(Page):
         btn_new = tk.Button(self, text="Nowa faktura",
                             command=self.new_invoice,
                             **look.button)
-        btn_new.pack(fill=tk.X, expand=True, **look.grid)
+        btn_new.pack(fill=tk.X, **look.grid)
 
         self.clock_thread = ClockThread(self.update_clock)
         self.clock_thread.start()
