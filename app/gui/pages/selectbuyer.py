@@ -42,21 +42,20 @@ class SelectBuyerPage(Page):
         search_entry.focus_set()
 
     def on_shown(self, next_page=None):
-        if next_page is not None:
-            self.next_page = next_page
+        self.next_page = next_page
         self.update_buyer_list()
 
     def on_search_changed(self):
         self.update_buyer_list()
 
     def on_buyer_selected(self):
-        if self.next_page is None:
-            return
-
         selection = self.listbox.curselection()
         text = self.listbox.get(selection[0])
         buyer = self.buyers[text]
-        self.master.show_page(self.next_page, buyer=buyer)
+        if self.next_page is None:
+            self.master.pop_page(buyer=buyer)
+        else:
+            self.master.change_page(self.next_page, buyer=buyer)
 
     def update_buyer_list(self):
         buyers = controller.search_buyers(self.var_search.get())
@@ -67,4 +66,3 @@ class SelectBuyerPage(Page):
             if text not in self.buyers:
                 self.buyers[text] = buyer
             self.listbox.insert(tk.END, text)
-

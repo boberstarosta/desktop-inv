@@ -9,21 +9,21 @@ from app import controller
 class NewInvoicePage(Page):
     def __init__(self, master, **kwargs):
         super().__init__(master, **kwargs)
-        
+
         self.invoice = None
-        
+
         heading_frame = tk.Frame(self, **look.frame_inv)
         heading_frame.pack(side=tk.TOP, fill=tk.X)
-        
+
         heading_label = tk.Label(heading_frame, text="Faktura VAT",
                                  **look.label_inv)
         heading_label.pack(side=tk.LEFT, fill=tk.X, expand=True, **look.pack)
-        
+
         self.var_number = tk.StringVar()
         number_label = tk.Label(heading_frame, textvariable=self.var_number,
                                 **look.label_inv)
         number_label.pack(side=tk.LEFT, fill=tk.X, expand=True, **look.pack)
-        
+
         date_frame = tk.Frame(self, **look.frame)
         date_frame.pack(side=tk.TOP, fill=tk.X)
 
@@ -42,15 +42,15 @@ class NewInvoicePage(Page):
                                 command=self.on_change_date_clicked,
                                 **look.button)
         date_button.pack(side=tk.LEFT, fill=tk.X, **look.pack)
-        
+
         buyer_frame = tk.Frame(self, **look.frame)
         buyer_frame.pack(side=tk.TOP, fill=tk.X)
-        
+
         buyer_caption_label = tk.Label(buyer_frame, text="Nabywca",
                                        **look.label)
         buyer_caption_label.pack(side=tk.LEFT, fill=tk.X, expand=True,
                                  **look.pack)
-        
+
         self.var_buyer_data = tk.StringVar()
         buyer_data_label = tk.Label(buyer_frame,
                                     textvariable=self.var_buyer_data,
@@ -89,7 +89,7 @@ class NewInvoicePage(Page):
         pass
 
     def on_change_buyer_clicked(self):
-        self.master.show_page("SelectBuyerPage", "NewInvoicePage")
+        self.master.push_page("SelectBuyerPage")
 
     def update_number_label(self):
         self.var_number.set("Numer " + self.invoice.get_number_str())
@@ -99,4 +99,3 @@ class NewInvoicePage(Page):
 
     def update_buyer_data_label(self):
         self.var_buyer_data.set(self.invoice.buyer.to_text())
-

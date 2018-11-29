@@ -6,6 +6,7 @@ BLUE = "#4286f4"
 GREEN = "#4ca522"
 RED = "#e22222"
 DARKGREEN = "#255111"
+GREY = "#888"
 
 PADDING = 10
 
@@ -18,12 +19,12 @@ FONT_LARGE_MONO = ("TkFixedFont", 20, "bold")
 pack = {
     'padx': PADDING,
     'pady': PADDING,
-}    
+}
 
 grid = {
     'padx': PADDING,
     'pady': PADDING,
-}    
+}
 
 
 frame = {
@@ -99,7 +100,10 @@ checkbutton = {
     'foreground': BLUE,
     'activebackground': BLUE,
     'activeforeground': WHITE,
+    'highlightbackground': WHITE,
+    'highlightcolor': BLUE,
+    'selectcolor': WHITE,
+    'disabledforeground': GREY,
     'padx': PADDING,
     'pady': PADDING,
 }
-

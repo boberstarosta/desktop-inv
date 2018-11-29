@@ -18,6 +18,7 @@ class PageContainerFrame(tk.Frame):
         super().__init__(master, **kwargs)
 
         self.pages = {}
+        self.stack = []
         self.current_page = None
         self.last_page = None
 
@@ -31,16 +32,31 @@ class PageContainerFrame(tk.Frame):
             self.pages[page_name] = page
             page.grid(row=0, column=0, sticky=tk.NSEW)
 
-        if len(page_classes):
-            self.show_page(page_classes[0].__name__)
+        if page_classes:
+            self.push_page(page_classes[0].__name__)
 
-    def show_page(self, page_name, *args, **kwargs):
+    def push_page(self, page_name, *args, **kwargs):
         page = self.pages[page_name]
-        if self.current_page is not None:
-            self.current_page.on_hidden()
+        if self.stack:
+            self.stack[-1].on_hidden()
         page.tkraise()
         page.on_shown(*args, **kwargs)
-        self.last_page = self.current_page.__class__.__name__
-        self.current_page = page
+        self.stack.append(page)
         return page
 
+    def pop_page(self, *args, **kwargs):
+        if len(self.stack) <= 1:
+            return
+        self.stack.pop().on_hidden()
+        page = self.stack[-1]
+        page.tkraise()
+        page.on_shown(*args, **kwargs)
+        return page
+
+    def change_page(self, page_name, *args, **kwargs):
+        self.stack.pop().on_hidden()
+        page = self.pages[page_name]
+        page.tkraise()
+        page.on_shown(*args, **kwargs)
+        self.stack.append(page)
+        return page

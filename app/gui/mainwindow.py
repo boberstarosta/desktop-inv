@@ -19,9 +19,5 @@ class MainWindow(tk.Tk):
         pages = [MainMenuPage, SelectBuyerPage, NewInvoicePage]
         self.page_container = PageContainerFrame(self, pages, **look.frame)
         self.page_container.pack(fill=tk.BOTH, expand=True)
-        
-        self.bind("<Escape>", lambda _: self.on_escape())
 
-    def on_escape(self):
-        if self.page_container.last_page is not None:
-            self.page_container.show_page(self.page_container.last_page)
+        self.bind("<Escape>", lambda _: self.page_container.pop_page())

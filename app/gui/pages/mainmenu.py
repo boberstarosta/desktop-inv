@@ -32,5 +32,4 @@ class MainMenuPage(Page):
         self.var_time.set(time)
 
     def new_invoice(self):
-        self.master.show_page("SelectBuyerPage", "NewInvoicePage")
-
+        self.master.push_page("SelectBuyerPage", "NewInvoicePage")
