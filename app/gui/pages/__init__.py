@@ -19,6 +19,7 @@ class PageContainerFrame(tk.Frame):
 
         self.pages = {}
         self.current_page = None
+        self.last_page = None
 
         self.grid(column=0, row=0, sticky=tk.NSEW)
         self.grid_columnconfigure(0, weight=1)
@@ -39,6 +40,7 @@ class PageContainerFrame(tk.Frame):
             self.current_page.on_hidden()
         page.tkraise()
         page.on_shown(*args, **kwargs)
+        self.last_page = self.current_page.__class__.__name__
         self.current_page = page
         return page
 

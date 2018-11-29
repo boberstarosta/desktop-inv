@@ -17,8 +17,11 @@ class MainWindow(tk.Tk):
         utils.center_window(self)
 
         pages = [MainMenuPage, SelectBuyerPage, NewInvoicePage]
-        page_container = PageContainerFrame(self, pages, **look.frame)
-        page_container.pack(fill=tk.BOTH, expand=True)
+        self.page_container = PageContainerFrame(self, pages, **look.frame)
+        self.page_container.pack(fill=tk.BOTH, expand=True)
         
-        self.bind("<Escape>", lambda _: page_container.show_page("MainMenuPage"))
+        self.bind("<Escape>", lambda _: self.on_escape())
 
+    def on_escape(self):
+        if self.page_container.last_page is not None:
+            self.page_container.show_page(self.page_container.last_page)

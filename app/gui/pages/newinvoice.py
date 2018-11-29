@@ -69,7 +69,8 @@ class NewInvoicePage(Page):
             self.invoice = Invoice(
                 date=datetime.date.today(),
                 number=controller.generate_invoice_number())
-        self.invoice.buyer = buyer
+        if buyer is not None:
+            self.invoice.buyer = buyer
         self.update_number_label()
         self.update_date_label()
         self.update_buyer_data_label()

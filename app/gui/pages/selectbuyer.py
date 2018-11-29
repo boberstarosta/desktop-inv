@@ -41,8 +41,9 @@ class SelectBuyerPage(Page):
 
         search_entry.focus_set()
 
-    def on_shown(self, next_page):
-        self.next_page = next_page
+    def on_shown(self, next_page=None):
+        if next_page is not None:
+            self.next_page = next_page
         self.update_buyer_list()
 
     def on_search_changed(self):
